@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://wad-tasktracker.vercel.app/',
+  baseURL: 'https://wad-tasktracker.vercel.app/api',
 });
 
 api.interceptors.request.use((config) => {
