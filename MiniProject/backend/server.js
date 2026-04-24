@@ -28,6 +28,9 @@ const connectDB = async () => {
     try {
         let uri = process.env.MONGODB_URI;
         if (!uri || uri.includes('localhost')) {
+            if (process.env.NODE_ENV === 'production') {
+                throw new Error("MONGODB_URI is not set in Vercel Environment Variables! Please add it in your Vercel Dashboard Settings.");
+            }
             const { MongoMemoryServer } = require('mongodb-memory-server');
             console.log('Starting in-memory database...');
             const memoryServer = await MongoMemoryServer.create();
