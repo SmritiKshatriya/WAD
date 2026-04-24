@@ -9,19 +9,58 @@ const topicRoutes = require('./routes/topics');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const globalMongoose = global;
+
+if (!globalMongoose.__mongooseCache) {
+    globalMongoose.__mongooseCache = {
+        connection: null,
+        promise: null,
+        error: null
+    };
+}
+
+const mongooseCache = globalMongoose.__mongooseCache;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Database connection logic
-let isDbConnected = false;
-let dbConnectionError = null;
+const normalizeMongoUri = (rawUri) => {
+    if (!rawUri) return rawUri;
+
+    let uri = rawUri.trim().replace(/^['"]|['"]$/g, '');
+
+    // Users often paste an HTTP-style "/api" suffix by mistake.
+    if ((uri.startsWith('mongodb://') || uri.startsWith('mongodb+srv://')) && uri.includes('/api')) {
+        try {
+            const parsed = new URL(uri);
+            const pathParts = parsed.pathname.split('/').filter(Boolean);
+
+            if (pathParts.length > 1) {
+                parsed.pathname = `/${pathParts[0]}`;
+                uri = parsed.toString();
+            }
+        } catch (error) {
+            uri = uri.replace(/\/api(\?.*)?$/, '$1');
+        }
+    }
+
+    return uri;
+};
 
 const connectDB = async () => {
-    if (isDbConnected) return;
+    if (mongooseCache.connection || mongoose.connection.readyState === 1) {
+        mongooseCache.connection = mongoose.connection;
+        mongooseCache.error = null;
+        return mongooseCache.connection;
+    }
+
+    if (mongooseCache.promise) {
+        return mongooseCache.promise;
+    }
+
     try {
-        let uri = process.env.MONGODB_URI;
+        let uri = normalizeMongoUri(process.env.MONGODB_URI || process.env.MONGO_URI);
         if (!uri || uri.includes('localhost')) {
             if (process.env.NODE_ENV === 'production') {
                 throw new Error("MONGODB_URI is not set or is localhost in Vercel Environment Variables!");
@@ -31,27 +70,35 @@ const connectDB = async () => {
             const memoryServer = await MongoMemoryServer.create();
             uri = memoryServer.getUri();
         }
-        await mongoose.connect(uri);
-        isDbConnected = true;
-        console.log(`Connected to MongoDB`);
+
+        mongooseCache.promise = mongoose.connect(uri, {
+            serverSelectionTimeoutMS: 10000
+        });
+
+        mongooseCache.connection = await mongooseCache.promise;
+        mongooseCache.error = null;
+        console.log('Connected to MongoDB');
+        return mongooseCache.connection;
     } catch (err) {
         console.error('MongoDB connection error:', err);
-        dbConnectionError = err.message || err.toString();
+        mongooseCache.error = err.message || err.toString();
+        throw err;
+    } finally {
+        mongooseCache.promise = null;
     }
 };
 
-// We connect when the file is loaded
-connectDB();
-
-// Middleware to prevent confusing timeout errors if DB is dead
-app.use((req, res, next) => {
-    if (!isDbConnected && dbConnectionError) {
+// Ensure DB is ready before handling API requests in serverless mode
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
         return res.status(500).json({ 
             message: "Database Connection Failed", 
-            error: "Vercel failed to reach MongoDB: " + dbConnectionError 
+            error: "Vercel failed to reach MongoDB: " + (mongooseCache.error || error.message || 'Unknown error')
         });
     }
-    next();
 });
 
 // Routes
