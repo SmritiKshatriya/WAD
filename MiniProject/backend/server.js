@@ -22,27 +22,33 @@ app.use('/api/topics', topicRoutes);
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 // Database connection logic
-const startServer = async () => {
+let isDbConnected = false;
+const connectDB = async () => {
+    if (isDbConnected) return;
     try {
         let uri = process.env.MONGODB_URI;
-        let memoryServer = null;
-
-        // If the URL is localhost or fails, we will dynamically start an in-memory MongoDB!
         if (!uri || uri.includes('localhost')) {
-            console.log('No local MongoDB detected. Starting in-memory database for testing...');
-            memoryServer = await MongoMemoryServer.create();
+            const { MongoMemoryServer } = require('mongodb-memory-server');
+            console.log('Starting in-memory database...');
+            const memoryServer = await MongoMemoryServer.create();
             uri = memoryServer.getUri();
         }
-
         await mongoose.connect(uri);
-        console.log(`Connected to MongoDB at: ${uri}`);
-
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
+        isDbConnected = true;
+        console.log(`Connected to MongoDB`);
     } catch (err) {
-        console.error('Failed to start server:', err);
+        console.error('MongoDB connection error:', err);
     }
 };
 
-startServer();
+// We connect when the file is loaded
+connectDB();
+
+// Only listen locally, Vercel will process it directly
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
+
+module.exports = app;
