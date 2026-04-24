@@ -94,9 +94,10 @@ app.use(async (req, res, next) => {
         await connectDB();
         next();
     } catch (error) {
+        const detailedError = mongooseCache.error || error.message || 'Unknown error';
         return res.status(500).json({ 
-            message: "Database Connection Failed", 
-            error: "Vercel failed to reach MongoDB: " + (mongooseCache.error || error.message || 'Unknown error')
+            message: "Database Connection Failed: Vercel failed to reach MongoDB: " + detailedError, 
+            error: "Vercel failed to reach MongoDB: " + detailedError
         });
     }
 });
