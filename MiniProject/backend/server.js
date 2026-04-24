@@ -56,6 +56,8 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/subjects', subjectRoutes);
+app.use('/api/topics', topicRoutes);
 
 // Only listen locally, Vercel will process it directly
 if (process.env.NODE_ENV !== 'production') {

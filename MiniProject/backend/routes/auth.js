@@ -13,14 +13,29 @@ const generateToken = (id) => {
 // @route POST /api/auth/register
 router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
+    const normalizedName = typeof name === 'string' ? name.trim() : '';
+    const normalizedEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
+    const normalizedPassword = typeof password === 'string' ? password : '';
 
     try {
-        const userExists = await User.findOne({ email });
+        if (!normalizedName || !normalizedEmail || !normalizedPassword) {
+            return res.status(400).json({ message: 'Name, email, and password are required' });
+        }
+
+        if (normalizedPassword.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+        }
+
+        const userExists = await User.findOne({ email: normalizedEmail });
         if (userExists) {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        const user = await User.create({ name, email, password });
+        const user = await User.create({
+            name: normalizedName,
+            email: normalizedEmail,
+            password: normalizedPassword
+        });
 
         if (user) {
             res.status(201).json({
@@ -33,6 +48,15 @@ router.post('/register', async (req, res) => {
             res.status(400).json({ message: 'Invalid user data' });
         }
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            const validationMessage = Object.values(error.errors)[0]?.message || 'Invalid user data';
+            return res.status(400).json({ message: validationMessage });
+        }
+
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
