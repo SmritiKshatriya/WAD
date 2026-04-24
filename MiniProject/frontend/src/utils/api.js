@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://chimerical-gumption-d31845.netlify.app/',
+  baseURL: 'https://wad-tasktracker.vercel.app/',
 });
 
 api.interceptors.request.use((config) => {
