@@ -1,6 +1,13 @@
 export default function getApiErrorMessage(error, fallbackMessage) {
-  if (error?.response?.data?.message) {
-    return error.response.data.message;
+  const responseMessage = error?.response?.data?.message;
+  const responseDetails = error?.response?.data?.error;
+
+  if (responseMessage && responseDetails) {
+    return `${responseMessage}: ${responseDetails}`;
+  }
+
+  if (responseMessage) {
+    return responseMessage;
   }
 
   if (error?.code === 'ERR_NETWORK' || !error?.response) {
