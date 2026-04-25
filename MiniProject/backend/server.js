@@ -63,7 +63,7 @@ const connectDB = async () => {
         let uri = normalizeMongoUri(process.env.MONGODB_URI || process.env.MONGO_URI);
         if (!uri || uri.includes('localhost')) {
             if (process.env.NODE_ENV === 'production') {
-                throw new Error("MONGODB_URI is not set or is localhost in Vercel Environment Variables!");
+                throw new Error('MONGODB_URI is not set or points to localhost in production.');
             }
             const { MongoMemoryServer } = require('mongodb-memory-server');
             console.log('Starting in-memory database...');
@@ -96,8 +96,8 @@ app.use(async (req, res, next) => {
     } catch (error) {
         const detailedError = mongooseCache.error || error.message || 'Unknown error';
         return res.status(500).json({ 
-            message: "Database Connection Failed: Vercel failed to reach MongoDB: " + detailedError, 
-            error: "Vercel failed to reach MongoDB: " + detailedError
+            message: 'Database connection failed',
+            error: detailedError
         });
     }
 });
@@ -107,8 +107,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/subjects', subjectRoutes);
 app.use('/api/topics', topicRoutes);
 
-// Only listen locally, Vercel will process it directly
-if (process.env.NODE_ENV !== 'production') {
+const isVercelRuntime = Boolean(process.env.VERCEL) || process.env.NODE_ENV === 'serverless';
+
+// Traditional hosts like Render need the process to bind to PORT.
+if (require.main === module || !isVercelRuntime) {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });
