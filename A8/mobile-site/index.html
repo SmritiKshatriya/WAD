@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pastel E-Commerce</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- jQuery Mobile CDN -->
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- HOME PAGE -->
+<div data-role="page" id="home">
+
+    <div data-role="header" class="header">
+        <h1>Pastel Shop</h1>
+    </div>
+
+    <div data-role="content">
+
+        <h2>Products</h2>
+
+        <div class="product">
+            <img src="https://via.placeholder.com/150">
+            <h3>Handbag</h3>
+            <p>₹999</p>
+            <button class="cart-btn" onclick="addToCart('Handbag')">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="https://via.placeholder.com/150">
+            <h3>Shoes</h3>
+            <p>₹1999</p>
+            <button class="cart-btn" onclick="addToCart('Shoes')">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="https://via.placeholder.com/150">
+            <h3>Watch</h3>
+            <p>₹1499</p>
+            <button class="cart-btn" onclick="addToCart('Watch')">Add to Cart</button>
+        </div>
+
+        <a href="#cart" data-role="button" class="nav-btn">View Cart</a>
+
+    </div>
+
+</div>
+
+<!-- CART PAGE -->
+<div data-role="page" id="cart">
+
+    <div data-role="header" class="header">
+        <h1>Your Cart</h1>
+    </div>
+
+    <div data-role="content">
+        <ul id="cartList" data-role="listview"></ul>
+
+        <button onclick="clearCart()" class="clear-btn">Clear Cart</button>
+        <a href="#home" data-role="button" class="nav-btn">Back to Shop</a>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
