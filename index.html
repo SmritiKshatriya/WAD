@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ================= HEADER START ================= -->
+<header class="p-3 text-bg-dark">
+  <div class="container d-flex justify-content-between align-items-center">
+    <h4 class="text-white mb-0">My Dashboard</h4>
+
+    <div>
+      <button class="btn btn-outline-light me-2">Login</button>
+      <button class="btn btn-warning">Sign-up</button>
+    </div>
+  </div>
+</header>
+<!-- ================= HEADER END ================= -->
+
+
+<!-- ================= MAIN LAYOUT START ================= -->
+<div class="d-flex" style="min-height: calc(100vh - 72px);">
+
+  <!-- ===== SIDEBAR START ===== -->
+  <aside class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+
+    <h4 class="text-white">Menu</h4>
+    <hr>
+
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li><a href="#" class="nav-link active">Home</a></li>
+      <li><a href="#" class="nav-link text-white">Dashboard</a></li>
+      <li><a href="#" class="nav-link text-white">Orders</a></li>
+      <li><a href="#" class="nav-link text-white">Products</a></li>
+      <li><a href="#" class="nav-link text-white">Customers</a></li>
+    </ul>
+
+    <hr>
+
+    <!-- User Dropdown -->
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white dropdown-toggle"
+         data-bs-toggle="dropdown">
+        <img src="https://media.licdn.com/dms/image/v2/D4D03AQFxjnxlkGOz3w/profile-displayphoto-scale_400_400/B4DZtVeAYlIEAg-/0/1766665488981?e=1778112000&v=beta&t=E8EmuqMvkU41weNhERC-coyfAbjKyWJ2j9zPixIzaoY"
+             class="rounded-circle me-2"
+             width="30" height="30">
+        <strong>Smriti</strong>
+      </a>
+
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li><a class="dropdown-item">Profile</a></li>
+        <li><a class="dropdown-item">Settings</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item">Sign out</a></li>
+      </ul>
+    </div>
+
+  </aside>
+  <!-- ===== SIDEBAR END ===== -->
+
+
+  <!-- ===== CONTENT AREA START ===== -->
+  <main class="flex-grow-1 p-4">
+
+    <!-- -------- HERO SECTION START -------- -->
+    <section class="container d-flex align-items-center" style="min-height: 70vh;">
+      <div class="row w-100 align-items-center">
+
+        <!-- Hero Text -->
+        <div class="col-lg-7">
+          <h1 class="fw-bold">Admin Panel</h1>
+          <p>
+            Manage products, orders, and customers efficiently using this dashboard.
+          </p>
+        </div>
+
+        <!-- Hero Form -->
+        <div class="col-lg-5">
+          <form class="p-4 border rounded bg-light shadow-sm">
+
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" placeholder="Email">
+              <label>Email</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" placeholder="Password">
+              <label>Password</label>
+            </div>
+
+            <button class="btn btn-primary w-100">Sign up</button>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+    <!-- -------- HERO SECTION END -------- -->
+
+
+    <!-- -------- CHECKOUT SECTION START -------- -->
+    <section class="container mt-5">
+      <h2 class="text-center mb-4">Checkout Form</h2>
+
+      <div class="row g-5">
+
+        <!-- Cart -->
+        <div class="col-md-4">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between">
+              Product 1 <span>$12</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              Product 2 <span>$8</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              Total <strong>$20</strong>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="col-md-8">
+          <form class="row g-3">
+
+            <div class="col-md-6">
+              <input class="form-control" placeholder="First name">
+            </div>
+
+            <div class="col-md-6">
+              <input class="form-control" placeholder="Last name">
+            </div>
+
+            <div class="col-12">
+              <input class="form-control" placeholder="Address">
+            </div>
+
+            <div class="col-12">
+              <button class="btn btn-primary w-100">Continue</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+    <!-- -------- CHECKOUT SECTION END -------- -->
+
+  </main>
+  <!-- ===== CONTENT AREA END ===== -->
+
+</div>
+<!-- ================= MAIN LAYOUT END ================= -->
+
+
+<!-- ================= BADGES SECTION START ================= -->
+<section class="d-flex flex-wrap gap-2 justify-content-center py-5">
+  <span class="badge bg-primary-subtle text-primary">Primary</span>
+  <span class="badge bg-secondary-subtle text-secondary">Secondary</span>
+  <span class="badge bg-success-subtle text-success">Success</span>
+  <span class="badge bg-danger-subtle text-danger">Danger</span>
+  <span class="badge bg-warning-subtle text-warning">Warning</span>
+  <span class="badge bg-info-subtle text-info">Info</span>
+</section>
+<!-- ================= BADGES SECTION END ================= -->
+
+
+<!-- ================= FOOTER START ================= -->
+<footer class="py-3 border-top text-center">
+  <ul class="nav justify-content-center mb-3">
+    <li class="nav-item"><a href="#" class="nav-link text-body-secondary">Home</a></li>
+    <li class="nav-item"><a href="#" class="nav-link text-body-secondary">Features</a></li>
+    <li class="nav-item"><a href="#" class="nav-link text-body-secondary">Pricing</a></li>
+    <li class="nav-item"><a href="#" class="nav-link text-body-secondary">FAQs</a></li>
+    <li class="nav-item"><a href="#" class="nav-link text-body-secondary">About</a></li>
+  </ul>
+
+  <p class="text-body-secondary mb-0">© 2025 Company, Inc</p>
+</footer>
+<!-- ================= FOOTER END ================= -->
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+body {
+    background-color: #f4f6f9;
+}
+
+.sidebar {
+    background-color: #212529;
+    min-height: 100vh;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.sidebar {
+    background-color: #212529;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.logo-text {
+    color: white;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.menu-list .nav-link {
+    color: #ced4da;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.menu-list .nav-link:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.active-menu {
+    background-color: #0d6efd;
+    color: white !important;
+}
+
+.menu-list i {
+    margin-right: 10px;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.top-navbar {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.page-title {
+    margin: 0;
+    font-weight: bold;
+}
+
+.search-box {
+    width: 220px;
+}
+
+.notification-icon {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.admin-profile {
+    font-weight: 500;
+}
+
+.profile-icon {
+    font-size: 28px;
+    margin-right: 8px;
+}
+
+.dashboard-card {
+    border: none;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.students-card {
+    background: linear-gradient(135deg, #0d6efd, #4e9eff);
+}
+
+.courses-card {
+    background: linear-gradient(135deg, #198754, #4dd4ac);
+}
+
+.exams-card {
+    background: linear-gradient(135deg, #dc3545, #ff758c);
+}
+
+.results-card {
+    background: linear-gradient(135deg, #fd7e14, #ffb067);
+}
+
+.card-icon {
+    font-size: 45px;
+    opacity: 0.8;
+}
+
+.table-card {
+    border: none;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+}
+
+.chart-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+}
+
